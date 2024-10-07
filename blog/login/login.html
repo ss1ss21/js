@@ -1,0 +1,99 @@
+<html lang="eng">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="login.css">
+  <title>Login</title>
+
+</head>
+
+<body>
+  <div class="login">
+    <div class="form">
+      <h1>login</h1>
+      <div class="input">
+        <input type="text" placeholder="user-name" name="user-name" id="usrname">
+        <input type="password" placeholder="password" name="passwrd" id="pswrd">
+      </div>
+      <div class="remember">
+        <input type="checkbox" name="checkbox" id="rmbr"> <label for="checkbox">Remember me</label>
+        <!-- <button onclick="setCookie()">COOKIEE</button> -->
+      </div>
+      <div class="sign">
+        <button type="submit" onclick="login()">Sign-in</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  function getCookieCheckbox(){
+    let cookie = document.cookie;
+    let x = cookie.search('checkbox=');
+    let cut = cookie.substring((x + 9), (x + 14));
+    return cut;
+}
+
+  window.onload = function () {
+    if (getCookieCheckbox() === 'true') {
+      document.getElementById('rmbr').checked = true;
+    }
+  }
+// nodejs
+// nodemon : sayfayi otomatik yeniler
+// nodeexpress
+// mongoose
+  let users = [{ "userName": "sinan", "password": "123", "active": "admin" },
+  { "userName": "ramazan", "password": "ramazan123", "active": "true" },
+  { "userName": "cemile", "password": "cemile123", "active": "false" },
+  { "userName": "hediye", "password": "hediye123", "active": "true" },
+  { "userName": "nesrin", "password": "nesrin123", "active": "false" },
+  { "userName": "volkan", "password": "volkan123", "active": "true" },
+  { "userName": "zeynep", "password": "zeynep123", "active": "true" }];
+
+  function login() {
+    let userName = document.getElementById('usrname').value.trim();
+    let password = document.getElementById('pswrd').value.trim();
+    let checkboox = document.getElementById('rmbr').checked;
+
+    //alert((userName === 'sinan' && password === '123') === true ? 'success' : 'fail');
+    let result = foR(users, userName, password);
+    console.log('result is ' + result);
+    if (result) {
+      setCookie(checkboox);
+      window.location.href = "../homepage/entrPg.html";
+    }
+    else {
+      alert('wrong user-name or password');
+    }
+  }
+
+  function fltr(liste, username, pswrd) {
+    return lst = liste.filter(user => user.userName == username && user.password == pswrd);
+  }
+
+  function forEach(liste,username,pswrd){
+    for (let i in users) {
+      if (users[i].userName == username && users[i].password == pswrd)
+        return true;
+    }
+    return false;
+  }
+
+  function foR(liste,username,pswrd){
+    for(i = 0; i < liste.length; i++){
+      if (users[i].userName == username && users[i].password == pswrd)
+      return true;
+    }
+    return false;
+  }
+
+  
+  function setCookie(isChecked) {
+    console.log('cookie is created!');
+    document.cookie = 'name=sinan checkbox=' + isChecked;
+  }
+</script>
+
+</html>
